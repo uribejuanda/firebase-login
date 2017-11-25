@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
@@ -10,7 +11,12 @@ import * as firebase from 'firebase/app';
 })
 export class LoginComponent implements OnInit {
 
-    constructor(public afAuth: AngularFireAuth) {
+    constructor(public afAuth: AngularFireAuth, private router: Router) {
+        this.afAuth.authState.subscribe(auth => {
+            if (auth) {
+                //this.router.navigateByUrl('/home');
+            }
+        });
     }
 
     loginWithGoogle() {
@@ -19,10 +25,6 @@ export class LoginComponent implements OnInit {
 
     loginWithFacebook() {
         this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
-    }
-
-    loginWithEmail() {
-        this.afAuth.auth.signInWithPopup(new firebase.auth.PhoneAuthProvider());
     }
 
     logout() {
