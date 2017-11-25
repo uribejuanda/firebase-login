@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RoutingModule } from './routing.module';
@@ -24,6 +25,7 @@ import { SignupComponent } from './signup/signup.component';
     ],
     imports: [
         BrowserModule,
+        ReactiveFormsModule,
         BrowserAnimationsModule,
         MaterialModule,
         RoutingModule,
