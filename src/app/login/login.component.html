@@ -7,5 +7,24 @@
 </div>
 <ng-template #showLogin>
     <p>Please login.</p>
-    <button (click)="login()">Login with Google</button>
+    <button (click)="loginWithGoogle()">Login with Google</button>
+    <button (click)="loginWithFacebook()">Login with facebook</button>
+    <button (click)="loginWithEmail()">Login with email</button>
 </ng-template>
+
+
+<mat-card class="login-card">
+    <mat-card-content>
+        <button mat-raised-button color="primary" (click)="loginWithFacebook()">
+            <i class="fa fa-facebook" aria-hidden="true"></i>Login With Facebook
+        </button>
+        <button mat-raised-button color="primary" (click)="loginWithGoogle()">
+            <i class="fa fa-google" aria-hidden="true"></i>Login With Google
+        </button>
+
+        <button mat-raised-button color="primary" (click)="loginWithEmail()">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>Email
+        </button>
+    </mat-card-content>
+</mat-card>
+
