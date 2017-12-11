@@ -1,6 +1,8 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { routerTransition } from '../router.animations';
+import { Router } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
     selector: 'app-signup',
@@ -11,19 +13,33 @@ import { routerTransition } from '../router.animations';
 export class SignupComponent implements OnInit {
     @HostBinding('@routerTransition') routeAnimation = true;
     hide = true;
-    email = new FormControl('', [Validators.required, Validators.email]);
-    password = new FormControl('', [Validators.required, Validators.minLength(4)]);
+    rForm: FormGroup;
+    error: any;
 
-    constructor() {
-    }
-
-    getErrorMessage() {
-        return this.email.hasError('required') ? 'You must enter a value' :
-            this.email.hasError('email') ? 'Not a valid email' :
-                '';
+    constructor(private fb: FormBuilder, public afAuth: AngularFireAuth, private router: Router) {
+        this.rForm = fb.group({
+            'email' : [null, Validators.compose([Validators.required, Validators.email])],
+            'password' : [null, Validators.compose([Validators.required, Validators.minLength(4)])]
+        });
     }
 
     ngOnInit() {
+    }
+
+    onSubmit(formData) {
+        console.log(formData);
+        this.afAuth.auth.createUserWithEmailAndPassword(
+            formData.email,
+            formData.password
+        ).then(
+            (success) => {
+                console.log(success);
+                this.router.navigate(['/login']);
+            }).catch(
+            (err) => {
+                console.log(err);
+                this.error = err;
+            });
     }
 
 }
